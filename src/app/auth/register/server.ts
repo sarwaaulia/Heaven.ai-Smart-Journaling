@@ -17,7 +17,7 @@ export async function getCurrentUser() {
 }
 
 export async function register(formData: FormData) {
-	console.log(`data masuk`, Object.fromEntries(formData.entries()));
+	console.log(`incoming data`, Object.fromEntries(formData.entries()));
 	// ambil data dari form
 	const rawData = {
 		name: formData.get("username"),
