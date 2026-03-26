@@ -32,15 +32,16 @@ export function useAiEnhancement() {
                 const errorMsg = data.error || data.details || "";
                 
                 if (res.status === 429 || errorMsg.includes("429") || errorMsg.includes("quota")) {
-                    alert("⚠️ Jatah harian Gemini 2.5 lu abis (Limit 20/hari). Ganti API Key di .env terus restart npm run dev!");
+                    console.log(`AI Limit`)
                 } else {
-                    alert(`Waduh error: ${errorMsg}`);
+                    alert(`Error: ${errorMsg}`);
                 }
                 return; // Stop di sini
             }
 
             setAIResult(data.tidiedText);
             setShowAIResult(true);
+            
         } catch (error: any) {
             console.error("AI Error:", error);
             alert("Gagal konek ke server AI.");

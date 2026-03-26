@@ -33,7 +33,7 @@ export async function register(formData: FormData) {
 		)[0]?.[0];
 
 		return {
-			error: firstError || "Validasi gagal",
+			error: firstError || "Validation failed",
 		};
 	}
 
