@@ -13,20 +13,31 @@ export async function analyzeWeeklyContentAI() {
 			return { error: "No authenticated user found" };
 		}
 
-    console.log("AUTH USER ID:", user.id);
+		console.log("AUTH USER ID:", user.id);
 
 		const aWeekAgo = new Date();
 		aWeekAgo.setDate(aWeekAgo.getDate() - 7);
 
 		const { data: entries, error: entriesError } = await supabase
 			.from("entries")
-			.select("content, mood, created_at")
+			// hanya mengambil 'mood' untuk menghindari kolom yang berat
+			.select("mood")
 			.eq("user_id", user.id)
 			.gte("created_at", aWeekAgo.toISOString());
 
 		if (entriesError) {
 			return { error: "Failed to fetch entries for analysis" };
 		}
+
+		const moodCounts = entries.reduce((acc: any, curr: any) => {
+			acc[curr.mood] = (acc[curr.mood] || 0) + 1;
+			return acc;
+		}, {});
+
+		const moodTrend = Object.entries(moodCounts).map(([mood, count]) => ({
+			mood,
+			count,
+		}));
 
 		const newInsight = {
 			summary: `Based on ${entries?.length || 0} entries this week, you showed consistent self-reflection and growth.`,
@@ -39,26 +50,20 @@ export async function analyzeWeeklyContentAI() {
 			created_at: new Date().toISOString(),
 		};
 
-		const { error: insertError } = await supabase
+		const { error: upsertError } = await supabase
 			.from("weekly_insights")
-			.insert([
+			.upsert([
 				{
 					user_id: user.id,
 					week_start: aWeekAgo.toISOString().split("T")[0],
 					week_end: new Date().toISOString().split("T")[0],
-					summary: `Based on ${entries?.length ?? 0} entries this week, you showed consistent self-reflection and growth.`,
-					top_themes: ["Personal Growth"],
-					mood_trend: [
-						{ mood: "Happy", count: 4 },
-						{ mood: "Neutral", count: 2 },
-						{ mood: "Tired", count: 1 },
-					],
-					entry_count: entries?.length ?? 0,
+					summary: `Based on ${entries?.length ?? 0} entries this week.`,
+					mood_trend: moodTrend
 				},
 			]);
 
-		if (insertError) {
-			console.error(`weekly error`, insertError);
+		if (upsertError) {
+			console.error(`weekly error`, upsertError);
 			return { error: "failed to save insight" };
 		}
 
