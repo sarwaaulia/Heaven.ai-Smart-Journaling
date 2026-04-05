@@ -20,7 +20,7 @@ export async function register(formData: FormData) {
 	console.log(`data masuk`, Object.fromEntries(formData.entries()));
 	// ambil data dari form
 	const rawData = {
-		name: formData.get("username"),
+		name: formData.get("name"),
 		email: formData.get("email"),
 		password: formData.get("password"),
 	};

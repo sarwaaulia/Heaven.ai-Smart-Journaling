@@ -27,7 +27,6 @@ export async function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
-  // 🔒 PROTECTED ROUTES
   const protectedRoutes = ["/dashboard", "/entries", "/insights"];
 
   if (
@@ -37,15 +36,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 
-  // 🚫 AUTH ROUTES (hanya redirect kalau sudah login)
   if (
     user &&
     pathname.startsWith("/auth")
   ) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
-
-  // ❗ HOME JANGAN DISENTUH
+  
   return response;
 }
 

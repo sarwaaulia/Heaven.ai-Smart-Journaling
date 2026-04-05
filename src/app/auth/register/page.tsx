@@ -17,7 +17,7 @@ export default function Register() {
 
 	async function handleRegister(e: React.FormEvent) {
 		e.preventDefault();
-		setLoading(false);
+		setLoading(true);
 
 		try {
 			const formData = new FormData();

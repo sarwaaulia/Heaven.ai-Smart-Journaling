@@ -133,13 +133,12 @@ export async function generateWeeklyInsight() {
 			.insert([newInsightData]);
 
 		if (insertError) {
-			// Tampilkan di terminal untuk melihat detail error (misal: "null value in column x")
 			console.error(
 				"Supabase Error:",
 				insertError.message,
 				insertError.details,
 			);
-			throw new Error(`Gagal menyimpan: ${insertError.message}`);
+			throw new Error(`Failed to save insight: ${insertError.message}`);
 		}
 
 		revalidatePath("/insights");

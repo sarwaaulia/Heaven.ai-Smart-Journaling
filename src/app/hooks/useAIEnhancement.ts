@@ -28,7 +28,7 @@ export function useAiEnhancement() {
             const data = await res.json();
 
             if (!res.ok) {
-                // Cek pesan error dari Google yang dikirim balik oleh route API kita
+                // cek pesan error dari Google yang dikirim balik oleh route API kita
                 const errorMsg = data.error || data.details || "";
                 
                 if (res.status === 429 || errorMsg.includes("429") || errorMsg.includes("quota")) {
@@ -36,14 +36,14 @@ export function useAiEnhancement() {
                 } else {
                     alert(`Waduh error: ${errorMsg}`);
                 }
-                return; // Stop di sini
+                return; // stop di sini
             }
 
             setAIResult(data.tidiedText);
             setShowAIResult(true);
         } catch (error: any) {
             console.error("AI Error:", error);
-            alert("Gagal konek ke server AI.");
+            alert("Failed to reconnect AI server.");
         } finally {
             setIsLoading(false);
         }
