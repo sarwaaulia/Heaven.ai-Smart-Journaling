@@ -26,9 +26,10 @@ export default function Register() {
 			formData.append("password", password);
 
 			const result = await register(formData);
+			console.log(result);
 
-			if (result?.error) {
-				toast.error(result.error);
+			if (result && "error" in result) {
+				toast.error(result.error || "Something went wrong while registering");
 				return;
 			}
 

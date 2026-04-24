@@ -26,11 +26,7 @@ export default function Login() {
 			formData.append("password", password);
 
 			const result = await login(formData);
-
-			if (result?.error) {
-				toast.error(result.error);
-				return;
-			}
+			console.log(result);
 
 			toast.success("Login successful! Welcome back.");
 			router.replace("/dashboard");
