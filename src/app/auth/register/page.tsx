@@ -26,9 +26,10 @@ export default function Register() {
 			formData.append("password", password);
 
 			const result = await register(formData);
+			console.log(result);
 
-			if (result?.error) {
-				toast.error(result.error);
+			if (result && "error" in result) {
+				toast.error(result.error || "Something went wrong while register");
 				return;
 			}
 
@@ -82,7 +83,7 @@ export default function Register() {
 
 						<div className="space-y-2">
 							<label className="text-sm font-medium text-text-secondary ml-1">
-								Email 
+								Email
 							</label>
 							<input
 								type="email"

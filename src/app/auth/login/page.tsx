@@ -27,11 +27,6 @@ export default function Login() {
 
 			const result = await login(formData);
 
-			if (result?.error) {
-				toast.error(result.error);
-				return;
-			}
-
 			toast.success("Login successful! Welcome back.");
 			router.replace("/dashboard");
 		} catch {
