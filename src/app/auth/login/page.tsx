@@ -26,24 +26,16 @@ export default function Login() {
 			formData.append("password", password);
 
 			const result = await login(formData);
+			console.log("Login result:", result);
 
-			if (result.error) {
-				toast.error(
-					result.error ||
-						"Failed to login. Please check your credentials and try again.",
-				);
+			if(result. error) {
+				toast.error(result.error || "Failed to login. Please check your credentials and try again.");
 				setLoading(false);
 				return;
 			}
 
 			toast.success("Login successful! Welcome back.");
-
-			router.refresh();
-			setTimeout(() => {
-				router.replace("/dashboard");
-			}, 100);
-
-			window.location.href= "/dashboard";
+			router.replace("/dashboard");
 		} catch {
 			toast.error("Something went wrong while signing in");
 		} finally {
@@ -68,9 +60,7 @@ export default function Login() {
 
 					<form onSubmit={handleLogin} className="space-y-5">
 						<div className="space-y-2">
-							<label className="text-sm font-medium text-text-secondary ml-1">
-								Email
-							</label>
+							<label className="text-sm font-medium text-text-secondary ml-1">Email</label>
 							<input
 								type="email"
 								placeholder="johndoe@gmail.com"
@@ -86,9 +76,7 @@ export default function Login() {
 						</div>
 
 						<div className="space-y-2">
-							<label className="text-sm font-medium text-text-secondary ml-1">
-								Password
-							</label>
+							<label className="text-sm font-medium text-text-secondary ml-1">Password</label>
 							<div className="relative">
 								<input
 									type={showPassword ? "text" : "password"}
@@ -113,46 +101,14 @@ export default function Login() {
 									"
 								>
 									{showPassword ? (
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											className="h-5 w-5"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke="currentColor"
-										>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth={2}
-												d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-5-10-7s4.477-7 10-7c1.284 0 2.509.27 3.625.763M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-											/>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth={2}
-												d="M3 3l18 18"
-											/>
+										<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-5-10-7s4.477-7 10-7c1.284 0 2.509.27 3.625.763M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3l18 18" />
 										</svg>
 									) : (
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											className="h-5 w-5"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke="currentColor"
-										>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth={2}
-												d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-											/>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth={2}
-												d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-											/>
+										<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
 										</svg>
 									)}
 								</button>
