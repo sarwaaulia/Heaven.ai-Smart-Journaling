@@ -27,7 +27,15 @@ export default function Login() {
 
 			const result = await login(formData);
 
+			if(result. error) {
+				toast.error(result.error || "Failed to login. Please check your credentials and try again.");
+				setLoading(false);
+				return;
+			}
+
 			toast.success("Login successful! Welcome back.");
+
+			router.refresh();
 			router.replace("/dashboard");
 		} catch {
 			toast.error("Something went wrong while signing in");
